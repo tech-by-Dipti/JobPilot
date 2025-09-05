@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 export default function JobsPage() {
   const [jobs, setJobs] = useState([]);
-  const skills = ["react", "nodejs", "mongo"]; // mock for now
+  const skills = ["react", "nodejs", "mongo"];
 
   useEffect(() => {
     fetch("/api/search-jobs", {

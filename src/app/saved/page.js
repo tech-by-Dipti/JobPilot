@@ -1,5 +1,5 @@
 'use client';
-import JobCard from '@/components/Jobcard';   // ✅ fixed
+import JobCard from '@/components/Jobcard';  
 import { useEffect, useState } from 'react';
 
 export default function SavedPage() {

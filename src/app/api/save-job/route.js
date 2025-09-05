@@ -9,7 +9,6 @@ export async function POST(request) {
     await mongoose.connect(connectionStr);
     const body = await request.json();
 
-    // ✅ sanitize incoming data
     const jobData = {
       title: body.title || "",
       url: body.url || "",

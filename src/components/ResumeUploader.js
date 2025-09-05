@@ -24,16 +24,16 @@ export default function ResumeUploader() {
 
       if (!res.ok) {
         const msg = await res.text();
-        finalText = `❌ Error: ${res.status} ${msg}`;
+        finalText = ` Error: ${res.status} ${msg}`;
       } else {
         const json = await res.json();
-        finalText = json.text || '⚠️ No text extracted';
+        finalText = json.text || 'No text extracted';
       }
 
       setText(finalText);
     } catch (err) {
       console.error('Upload failed:', err);
-      setText('❌ Upload or parsing failed');
+      setText(' Upload or parsing failed');
     } finally {
       setLoading(false);
     }
