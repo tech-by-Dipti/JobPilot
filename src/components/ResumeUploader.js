@@ -1,5 +1,5 @@
 'use client';
-import { DocumentIcon, UploadIcon } from '@heroicons/react/24/outline';
+import { DocumentIcon } from '@heroicons/react/24/outline';
 import { useState } from 'react';
 
 export default function ResumeUploader() {
@@ -31,6 +31,31 @@ export default function ResumeUploader() {
       }
 
       setText(finalText);
+
+      
+      if (finalText && finalText.length > 20) {
+        const skillsRes = await fetch('/api/extract-skill', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ resumeText: finalText }),
+        });
+
+       if (skillsRes.ok) {
+  const { skills } = await skillsRes.json();
+
+  // Clean the skills
+  const cleanedSkills = skills.map(s =>
+    s.replace(/```json|```/g, '')  
+     .replace(/\n/g, '')             
+     .trim()                         
+     .toLowerCase()                  
+  );
+
+  localStorage.setItem("userSkills", JSON.stringify(cleanedSkills));
+  console.log("Cleaned Skills:", cleanedSkills);
+}
+
+      }
     } catch (err) {
       console.error('Upload failed:', err);
       setText(' Upload or parsing failed');
@@ -59,7 +84,7 @@ export default function ResumeUploader() {
                 Drop your resume or{" "}
                 <span className="text-sky-600 font-semibold">click to browse</span>
               </p>
-              <p className="text-xs text-slate-400 mt-1">Only .pdf or .docx allowed</p>
+              <p className="text-xs text-slate-400 mt-1">Only .pdf or .docx allowed[max:4.5MB]</p>
             </>
           )}
         </label>
